@@ -8,9 +8,15 @@ def add_circle( points, cx, cy, cz, r, step ):
         add_edge(points, cx + r * math.cos(2 * math.pi * t), cy + r * math.sin(2 * math.pi * t), cz,  cx + r * math.cos(2 * math.pi * (t+step)), cy + r * math.sin(2 * math.pi * (t+step)), cz)
         t += step
 
-def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
-    pass
+def computeBezier(t,a,b,c,d):
+    return a * (1-t) ** 3 + 3 * b * t * (1-t) ** 2 + 3 * c * (1-t) * t * t + d * t ** 3
 
+def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
+    t = 0
+    if curve_type == 'bezier':
+        while t < 1:
+            add_edge(points, computeBezier(t,x0,x1,x2,x3), computeBezier(t,y0,y1,y2,y3), 0, computeBezier(t + step,x0,x1,x2,x3), computeBezier(t + step,y0,y1,y2,y3), 0 )
+            t += step
 
 def draw_lines( matrix, screen, color ):
     if len(matrix) < 2:
