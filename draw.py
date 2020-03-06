@@ -1,9 +1,12 @@
 from display import *
 from matrix import *
-
+import math
 
 def add_circle( points, cx, cy, cz, r, step ):
-    pass
+    t = 0
+    while t < 1:
+        add_edge(points, cx + r * math.cos(2 * math.pi * t), cy + r * math.sin(2 * math.pi * t), cz,  cx + r * math.cos(2 * math.pi * (t+step)), cy + r * math.sin(2 * math.pi * (t+step)), cz)
+        t += step
 
 def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
     pass
