@@ -11,11 +11,22 @@ def add_circle( points, cx, cy, cz, r, step ):
 def computeBezier(t,a,b,c,d):
     return a * (1-t) ** 3 + 3 * b * t * (1-t) ** 2 + 3 * c * (1-t) * t * t + d * t ** 3
 
+def computeHermite(t,start,end, r0, r1):
+    a = 2 * start - 2 * end + r0 + r1
+    b = -3 * start + 3 * end - 2 * r0 - r1
+    c = r0
+    d = start
+    return  a * t ** 3 + b * t ** 2 + c * t + d
+
 def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
     t = 0
     if curve_type == 'bezier':
         while t < 1:
             add_edge(points, computeBezier(t,x0,x1,x2,x3), computeBezier(t,y0,y1,y2,y3), 0, computeBezier(t + step,x0,x1,x2,x3), computeBezier(t + step,y0,y1,y2,y3), 0 )
+            t += step
+    elif curve_type == 'hermite':
+        while t < 1:
+            add_edge(points, computeHermite(t,x0,x1,x2,x3), computeHermite(t,y0,y1,y2,y3), 0, computeHermite(t + step,x0,x1,x2,x3), computeHermite(t + step,y0,y1,y2,y3), 0 )
             t += step
 
 def draw_lines( matrix, screen, color ):

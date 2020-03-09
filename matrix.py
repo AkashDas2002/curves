@@ -11,7 +11,7 @@ import math
 
 def make_bezier():
     pass
-    
+
 def make_hermite():
     pass
 
